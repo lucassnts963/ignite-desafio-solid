@@ -1,0 +1,345 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Create User Documentation",
+    "description": "API created for complete a challenge in ignite bootcamp created by Rocketseat",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Lucas Santos",
+      "email": "lucassnts963@gmail.com"
+    }
+  },
+  "tags": [
+    {
+      "name": "Users",
+      "description": "Resource to management of a users"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Create a new user",
+        "description": "You have to pass a name and a email through the request body",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "name": "name sample",
+                "email": "sample@email.com"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "admin": {
+                      "type": "boolean"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  }
+                },
+                "example": {
+                  "id": "should be a uuid",
+                  "name": "name sample",
+                  "admin": true,
+                  "email": "sample@email.com",
+                  "created_at": "some date object",
+                  "updated_at": "some date object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Email has been taken",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "Email has been taken"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Users"],
+        "summary": "Show all users created at the moment",
+        "description": "You have to pass a existent user_id through request headers",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "header",
+            "description": "You have to informe the User ID in the requests headers",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "admin": {
+                        "type": "boolean"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      },
+                      "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      }
+                    }
+                  }
+                },
+                "example": [
+                  {
+                    "id": "should be a uuid",
+                    "name": "name sample",
+                    "admin": true,
+                    "email": "sample@email.com",
+                    "created_at": "some date object",
+                    "updated_at": "some date object"
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "User not exists or You are not a admin",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "User not exists or You are not a admin"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Show all information from a user (profile)",
+        "description": "You have to pass a existent user_id through url",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "You have to informe the User ID in the requests path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "admin": {
+                      "type": "boolean"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  }
+                },
+                "example": {
+                  "id": "should be a uuid",
+                  "name": "name sample",
+                  "admin": true,
+                  "email": "sample@email.com",
+                  "created_at": "some date object",
+                  "updated_at": "some date object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "User not exists"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}/admin": {
+      "patch": {
+        "tags": ["Users"],
+        "summary": "Change user to be admin",
+        "description": "You have to pass a existent user_id through request path",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "You have to informe the User ID that you want to change to a admin",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "admin": {
+                      "type": "boolean"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  }
+                },
+                "example": {
+                  "id": "should be a uuid",
+                  "name": "name sample",
+                  "admin": true,
+                  "email": "sample@email.com",
+                  "created_at": "some date object",
+                  "updated_at": "some date object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "User not exists"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
